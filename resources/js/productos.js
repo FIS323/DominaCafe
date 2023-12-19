@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
     function listarProductos() {
-        // Hacer una solicitud GET a la API para obtener la lista de productos
+        
         fetch('/api/productos')
             .then(response => response.json())
             .then(data => {
                 const listaProductos = document.getElementById('lista-productos');
 
-                // Limpiar la lista antes de agregar nuevos elementos
+                
                 listaProductos.innerHTML = '';
 
-                // Verificar si hay productos para mostrar
+                
                 if (data.length === 0) {
                     const mensaje = document.createElement('p');
                     mensaje.textContent = 'No hay productos disponibles.';
                     listaProductos.appendChild(mensaje);
                 } else {
-                    // Recorrer la lista de productos y agregar elementos a la lista HTML
+                    
                     data.forEach(producto => {
                         const listItem = document.createElement('li');
                         listItem.textContent = `${producto.nombre} - Precio: ${producto.precio} - Stock: ${producto.stock}`;
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error al obtener la lista de productos:', error));
     }
 
-    // Llamar a la función para listar productos al cargar la página
+    
     listarProductos();
 
         function crearProducto() {

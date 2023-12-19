@@ -64,3 +64,50 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+CONSIDERACIONES PARA LA INSTALACIÓN DEL PROYECTO
+
+Sin asumir que el usuario que descargue el repositorio tenga instalado Laravel, en el documento php.ini habilitar la variable extension=zip borrando el ";" y guardando el archivo para despues en la terminal correr el comando ´composer create-project laravel/laravel app-name´ que para este caso el nombre del proyecto fue domina-cafe.
+
+Instalar MySQL para el motor de base de datos.
+
+Para la clonación del repositorio en terminal registrar el siguiente comando:
+
+ git clone https://github.com/FIS323/DominaCafe.git
+   cd tu-repositorio
+
+Instalar Jason web token JWT con composer a traves del siguiente comando en la terminal:
+ composer require tymon/jwt-auth
+
+En el archivo .env ya se encuentra configurado el JWT
+En terminal lanzar los siguientes comandos para activar el JWT:
+ 
+ php artisan jwt:secret
+ php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+Una vez descargado el repositorio correr los migration que permiten la creación de las tablas en la base de datos:
+
+ php artisan migrate:rollback
+ php artisan make:migration create_ventas_table 
+ php artisan make:migration create_productos_table
+ php artisan db:seed --class=ProductosTableSeeder //Con la idea de agregar producto ejemplo a la tabla de productos
+
+Consulta en SQL para el producto con mayor stock:
+
+ SELECT * FROM productos
+ ORDER BY stock DESC
+ LIMIT 1;
+
+Consulta en SQL para el producto mas vendido:
+
+ SELECT p.*, SUM(v.cantidad) AS total_vendido
+ FROM productos p JOIN ventas v ON p.id = v.producto_id
+ GROUP BY p.id
+ ORDER BY total_vendido DESC
+ LIMIT 1;
+
+
+
+
